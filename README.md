@@ -1,4 +1,4 @@
-# kanastra-challenge-Fronend
+# kanastra-challenge-Frontend
 - basically, the project sends file to the backend in chunks, which could be handled more easily
 
 ### Prerequisites
