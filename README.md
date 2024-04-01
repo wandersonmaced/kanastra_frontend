@@ -21,7 +21,7 @@ _(Recommended if you're using Windows without WSL)_
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Kanastra-Tech/kanastra-challenge-boilerplate.git
+   git clone https://github.com/wandersonmaced/kanastra_frontend/
    ```
 2. Install the packages
    ```sh
@@ -41,5 +41,6 @@ _(Recommended if you're using Windows without WSL)_
     ```sh
     npm run dev:node
     ```
-    ```
+4. this project uses a backend project that needs to be running
+- https://github.com/wandersonmaced/kanastra_backend
 
