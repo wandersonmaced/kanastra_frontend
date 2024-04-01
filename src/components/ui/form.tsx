@@ -2,9 +2,8 @@ import React, { useCallback } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { exit } from 'process';
 
-const CHUNK_SIZE = 1024 * 5; // 5 MB
+const CHUNK_SIZE = 1048576 * 5; // 5 MB
 
 const FileUploadForm: React.FC = () => {
   const onDrop = useCallback(async (acceptedFiles: File[], _fileRejections: FileRejection[]) => {
