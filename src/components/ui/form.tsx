@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import {Popup} from './popup';
 
@@ -35,7 +35,7 @@ const FileUploadForm: React.FC = () => {
       formData.append('chunk_qtd', String(chunk_qtd));
 
       try {
-        const response = await axios.post('http://localhost:8000/files/upload', formData, {
+        await axios.post('http://localhost:8000/files/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
