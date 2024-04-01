@@ -9,13 +9,11 @@ import {
   TableCell,
 } from './table'
 
-
 enum ActionType {
   FETCH_REQUEST = 'FETCH_REQUEST',
   FETCH_SUCCESS = 'FETCH_SUCCESS',
   FETCH_FAILURE = 'FETCH_FAILURE',
 }
-
 
 interface Action {
   type: ActionType;
@@ -40,7 +38,6 @@ const initialState: State = {
   count: 0,
 };
 
-
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ActionType.FETCH_REQUEST:
@@ -60,7 +57,6 @@ const reducer = (state: State, action: Action): State => {
       return state;
   }
 };
-
 
 const ListOfCsvData: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -129,40 +125,40 @@ const ListOfCsvData: React.FC = () => {
   return (
     <div className="container mx-auto">
       {state.loading && <p>Loading...</p>}
-      {state.error && <p>Error: {state.error}</p>}
+      {state.error && <p className="text-red-500 font-bold text-lg text-center">{state.error}</p>}
       {state.data.length > 0 && (
         <div>
-          <h2 className="text-2xl font-bold mb-4">CSV Data</h2>
-          <Table>
-            <TableHeader>
-              <TableRow>
-              <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Government ID</TableHead>
-                <TableHead>Debt Amount</TableHead>
-                <TableHead>Debt Due Date</TableHead>
-                <TableHead>Debt ID</TableHead>
-                <TableHead>Created At</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {state.data.map((item: any) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.email}</TableCell>
-                  <TableCell>{item.amount}</TableCell>
-                  <TableCell>{item.governmentId}</TableCell>
-                  <TableCell>{item.debtAmount}</TableCell>
-                  <TableCell>{item.debtDueDate}</TableCell>
-                  <TableCell>{item.debtId}</TableCell>
-                  <TableCell>{item.created_at}</TableCell>
+          <h2 className="text-2xl font-bold mb-4 text-center">Table of Debts</h2>
+          <div className="flex justify-center">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Government ID</TableHead>
+                  <TableHead>Debt Amount</TableHead>
+                  <TableHead>Debt Due Date</TableHead>
+                  <TableHead>Debt ID</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {state.data.map((item: any) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.id}</TableCell>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.email}</TableCell>
+                    <TableCell>{item.amount}</TableCell>
+                    <TableCell>{item.governmentId}</TableCell>
+                    <TableCell>{item.debtAmount}</TableCell>
+                    <TableCell>{item.debtDueDate}</TableCell>
+                    <TableCell>{item.debtId}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
           {renderPagination()}
         </div>
       )}
@@ -170,4 +166,4 @@ const ListOfCsvData: React.FC = () => {
   );
 };
 
-export {ListOfCsvData};
+export { ListOfCsvData };

@@ -2,12 +2,15 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import axios, { AxiosError } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import {Popup} from './popup';
 
 const CHUNK_SIZE = 1048576 * 5; // 5 MB
 
 const FileUploadForm: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [uploadMessage, setUploadMessage] = useState<string>('');
+  const [chunkUploadMessages, setChunkUploadMessages] = useState<string[]>([]);
+  const [showSuccessPopup, setShowSuccessPopup] = useState<boolean>(false);
 
   const onDrop = useCallback(async (acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length > 0) {
@@ -41,11 +44,13 @@ const FileUploadForm: React.FC = () => {
             setUploadProgress(progress);
           }
         });
-        console.log(`Chunk ${i + 1}/${chunk_qtd} uploaded successfully`);
+        const message = `Chunk ${i + 1}/${chunk_qtd} uploaded successfully`;
+        setChunkUploadMessages(prevMessages => [...prevMessages, message]);
 
         // Update upload message upon completion
         if (i === chunk_qtd - 1) {
           setUploadMessage('File upload complete');
+          setShowSuccessPopup(true);
         }
       } catch (error) {
         console.error('Upload failed:', error);
@@ -55,23 +60,27 @@ const FileUploadForm: React.FC = () => {
     }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: '.csv' });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept:{'text/csv': ['.csv']} });
 
   return (
-    <div className="md:container md:mx-auto">
+    <div className="container mx-auto">
       <div className="flex flex-col items-center justify-center h-screen">
-        <h1>Drop your CSV Files Here:</h1>
-        <div className="w-full max-w-lg p-6 bg-white shadow-md rounded-md">
-          <div {...getRootProps()} className="border-2 border-dashed border-gray-400 rounded-md cursor-pointer">
-            <input {...getInputProps()} />
-            {isDragActive ?
-              <p className="p-4">Drop the files here ...</p> :
-              <p className="p-4">Drag 'n' drop some files here, or click to select files</p>
-            }
-          </div>
+        <h1 className="text-3xl font-semibold mb-6">Drop your CSV Files Here:</h1>
+        <div {...getRootProps()} className="w-full max-w-lg p-6 bg-white shadow-md rounded-md border-2 border-dashed border-gray-400 cursor-pointer">
+          <input {...getInputProps()} />
+          {isDragActive ?
+            <p className="p-4">Drop the files here ...</p> :
+            <p className="p-4">Drag 'n' drop some files here, or click to select files</p>
+          }
         </div>
-        {uploadProgress > 0 && uploadProgress < 100 && <progress value={uploadProgress} max={100}></progress>}
-        {uploadMessage && <p>{uploadMessage}</p>}
+        {uploadProgress > 0 && uploadProgress < 100 && <progress className="mt-4" value={uploadProgress} max={100}></progress>}
+        {uploadMessage && <p className="mt-4">{uploadMessage}</p>}
+        <div className="mt-4">
+          {chunkUploadMessages.map((message, index) => (
+            <p key={index}>{message}</p>
+          ))}
+        </div>
+        {showSuccessPopup && <Popup onClose={() => setShowSuccessPopup(false)} />}
       </div>
     </div>
   );
