@@ -1,8 +1,5 @@
-# kanastra-challenge-boilerplate
-
-
-<!-- GETTING STARTED -->
-## Getting Started
+# kanastra-challenge-Fronend
+- basically, the project sends file to the backend in chunks, which could be handled more easily
 
 ### Prerequisites
 
@@ -40,6 +37,9 @@ _(Recommended if you're using Windows without WSL)_
 
     ```sh
     npm run dev:node
+    ```
+    ```
+    HTTP://localhost:8888
     ```
 4. this project uses a backend project that needs to be running
 - https://github.com/wandersonmaced/kanastra_backend
