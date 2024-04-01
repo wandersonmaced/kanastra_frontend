@@ -11,7 +11,6 @@ root.render(
     <Components.Navbar></Components.Navbar>
     <BrowserRouter basename="">
       <Routes>
-        <Route path="/" element={<Components.NoMatch/>}/>
         <Route path="/formUpload" element={<Components.FileUploadForm/>}/>
         <Route path="/listOfDebts" element={<Components.ListOfCsvData/>}/>
       </Routes>

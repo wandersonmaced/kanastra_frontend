@@ -7,7 +7,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from './table
+} from './table'
 
 
 enum ActionType {
